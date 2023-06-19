@@ -272,47 +272,6 @@ class Cliente {
             return '';
         }
     }
-    validarRgOuInscricaoEstadual(numero) {
-        // Remova qualquer formatação indesejada do número
-        const numeroLimpo = numero.replace(/[^\d]/g, "");
-        // Verifique se o número possui o formato correto
-        // const regex = /^[0-9]{8}-?[0-9]{1}$/;
-        // if (!regex.test(numeroLimpo)) {
-        //   return false;
-        // }
-        // Verifique o dígito verificador
-        const digitos = numeroLimpo.split("");
-        const tamanho = digitos.length;
-        // Validação para RG
-        if (tamanho === 9) {
-            const soma = (parseInt(digitos[0]) * 2) +
-                (parseInt(digitos[1]) * 3) +
-                (parseInt(digitos[2]) * 4) +
-                (parseInt(digitos[3]) * 5) +
-                (parseInt(digitos[4]) * 6) +
-                (parseInt(digitos[5]) * 7) +
-                (parseInt(digitos[6]) * 8) +
-                (parseInt(digitos[7]) * 9);
-            const digitoVerificador = soma % 11 === 10 ? 0 : soma % 11;
-            if (digitoVerificador.toString() === digitos[tamanho - 1]) {
-                return numeroLimpo;
-            }
-            console.log('RG inválido!');
-        }
-        // Validação para Inscrição Estadual
-        if (tamanho === 8) {
-            let soma = 0;
-            for (let i = 0; i < tamanho - 1; i++) {
-                soma += parseInt(digitos[i]) * (tamanho - i);
-            }
-            const digitoVerificador = 11 - (soma % 11);
-            if (digitoVerificador.toString() === digitos[tamanho - 1]) {
-                return numeroLimpo;
-            }
-            console.log('Inscrição Estadual inválida!');
-        }
-        return '';
-    }
 }
 class Produto {
     constructor(id, codigo, descricao, setores) {
@@ -743,6 +702,8 @@ function createNewVersoes(produto, versoes, datasPrevisao, datasLiberacao) {
 }
 function onInit() {
     return __awaiter(this, void 0, void 0, function* () {
+        const cliente2 = yield createNewCliente(1, 'NEO SISTEMAS DE INFORMATICA LTDA', 'Neo Sistemas', TipoPessoa.JURIDICA, YesNoOption.NAO, '82130709000176', 'ISENTO', Status.ATIVO, '4836587070', '', 'financeiro@neosistemas.com.br', '88870000', 'José Adélcio da Silva', 77, 'Rio Bonito', 'Edifício', '', '');
+        console.log(cliente2);
         const cliente = yield createNewCliente(1, 'NEO SISTEMAS DE INFORMATICA LTDA', 'Neo Sistemas', TipoPessoa.JURIDICA, YesNoOption.NAO, '82130709000176', 'ISENTO', Status.ATIVO, '4836587070', '', 'financeiro@neosistemas.com.br', '88750000', 'José Adélcio da Silva', 77, 'Rio Bonito', 'Edifício', '', '');
         console.log(cliente);
         const administrador = createNewUsuarioAdministrador(1, 'Márcio José da Silva', 'marcio@neosistemas.com.br', 'Abc123467&8');
